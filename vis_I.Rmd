@@ -33,3 +33,85 @@ weather_df =
 
 ```
 
+```{r}
+
+ggplot(weather_df, aes(x = tmin, y = tmax)) +
+  geom_point(aes(color = name), alpha = .5) + 
+  geom_smooth(se = FALSE)
+
+```
+
+```{r}
+
+ggplot(weather_df, aes(x = tmin, y = tmax, color = name)) + 
+  geom_point(aes(size = prcp), alpha = .5) +
+  geom_smooth(se = FALSE) + 
+  facet_grid(. ~ name)
+
+```
+
+```{r}
+
+ggplot(weather_df, aes(x = date, y = tmax, color = name)) + 
+  geom_smooth(se = FALSE) 
+
+```
+
+```{r}
+
+ggplot(weather_df, aes(x = tmin, fill = name)) + 
+  geom_histogram()
+
+```
+
+```{r}
+
+ggplot(weather_df, aes(x = tmin, fill = name)) + 
+  geom_density(alpha = .5)
+
+```
+
+```{r}
+
+ggplot(weather_df, aes(x = name, y = tmin)) + 
+  geom_violin(aes(fill = name), alpha = .5) + 
+  stat_summary(fun = "median", color = "blue")
+
+```
+
+# Ridge Plot
+
+```{r}
+
+weather_df %>% 
+  ggplot(aes(x=tmin, y=name)) +
+  geom_density_ridges()
+
+```
+
+LA univariate plots 
+
+```{r}
+
+weather_df %>% 
+  ggplot(aes(x=prcp, fill = name)) +
+  geom_density(alpha = 0.3)
+
+weather_df %>% 
+  ggplot(aes(x=name, y = prcp)) +
+  geom_boxplot()
+
+```
+
+## Saving and embedding plots 
+
+```{r}
+
+ggp_weather <- weather_df %>% 
+  ggplot(aes(x=date, y=tmax, color=name)) +
+  geom_point()
+
+ggsave("plots/ggp_weather.pdf", ggp_weather, width = 8, height = 5)
+
+```
+
